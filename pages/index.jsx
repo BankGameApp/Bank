@@ -1,16 +1,21 @@
 import React from 'react'
-import { Heading, Box, Button, useColorMode } from '@chakra-ui/react'
+import {
+  Heading,
+  Button,
+  useColorMode,
+  Flex
+} from '@chakra-ui/react'
 
 const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-    <Box>
-      <Heading>Hello Chakra UI!</Heading>
+    <Flex justify='space-between' alignItems='center'>
+      <Heading textAlign='center'>Bank!</Heading>
       <Button onClick={toggleColorMode}>
         Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
       </Button>
-    </Box>
+    </Flex>
   )
 }
 
