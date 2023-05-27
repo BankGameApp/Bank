@@ -74,10 +74,9 @@ const PlayerDrawer = () => {
             </List>
           </DrawerBody>
           <DrawerFooter>
-            <Button colorScheme="blue" mr={3} onClick={addPlayer}>
+            <Button mr={3} onClick={addPlayer}>
               Add Player
             </Button>
-            <Button onClick={onClose}>Close</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
