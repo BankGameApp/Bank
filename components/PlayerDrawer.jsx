@@ -49,7 +49,7 @@ const PlayerDrawer = () => {
   }
 
   return (
-    <Box p={4}>
+    <Box>
       <Button onClick={onOpen}>Manage Players</Button>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
