@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Heading,
   Flex,
@@ -11,6 +11,8 @@ import {
 } from '../components'
 
 const Home = () => {
+  const [players, setPlayers] = useState([])
+
   return (
     <>
       <Flex
@@ -24,7 +26,10 @@ const Home = () => {
         <Flex>
           <ToggleTheme />
           <Box marginLeft='2'>
-            <PlayerDrawer />
+            <PlayerDrawer
+              players={players}
+              setPlayers={setPlayers}
+            />
           </Box>
         </Flex>
       </Flex>

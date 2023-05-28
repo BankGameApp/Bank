@@ -18,10 +18,9 @@ import {
   Flex
 } from '@chakra-ui/react'
 
-const PlayerDrawer = () => {
+const PlayerDrawer = ({ players, setPlayers }) => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [players, setPlayers] = useState([])
   const [newPlayer, setNewPlayer] = useState('')
 
   const addPlayer = () => {
