@@ -1,16 +1,16 @@
 import React from 'react'
 import {
   Heading,
-  Button,
-  useColorMode,
   Flex,
   Box
 } from '@chakra-ui/react'
-import { Game, PlayerDrawer } from '../components'
+import {
+  Game,
+  PlayerDrawer,
+  ToggleTheme,
+} from '../components'
 
 const Home = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
-
   return (
     <>
       <Flex
@@ -21,9 +21,7 @@ const Home = () => {
         marginBottom='5'
       >
         <Heading textAlign='center'>Bank!</Heading>
-        <Button onClick={toggleColorMode}>
-          Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-        </Button>
+        <ToggleTheme />
       </Flex>
       <Box>
         <PlayerDrawer />
