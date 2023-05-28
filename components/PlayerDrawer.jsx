@@ -72,7 +72,7 @@ const PlayerDrawer = ({ players, setPlayers }) => {
                 mb={2}
               />
               <InputRightElement width='auto'>
-                <Button onClick={addPlayer}>
+                <Button colorScheme='blue' onClick={addPlayer}>
                   Add
                 </Button>
               </InputRightElement>
