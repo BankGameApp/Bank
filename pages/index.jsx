@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Heading,
   Flex,
-  Box
+  Box,
 } from '@chakra-ui/react'
 import {
   Game,
@@ -21,10 +21,15 @@ const Home = () => {
         marginBottom='5'
       >
         <Heading textAlign='center'>Bank!</Heading>
-        <ToggleTheme />
+        <Flex>
+          <ToggleTheme />
+          <Box marginLeft='2'>
+            <PlayerDrawer />
+          </Box>
+        </Flex>
       </Flex>
+
       <Box>
-        <PlayerDrawer />
         <Game />
       </Box>
     </>
