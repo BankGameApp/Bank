@@ -15,7 +15,9 @@ import {
   Text,
   useDisclosure,
   useToast,
-  Flex
+  Flex,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react'
 
 const PlayerDrawer = ({ players, setPlayers }) => {
@@ -32,8 +34,7 @@ const PlayerDrawer = ({ players, setPlayers }) => {
         score: 0
       };
 
-      // set new player and sort the player list alphabetically
-      setPlayers([...players, player].sort((a, b) => a.name.localeCompare(b.name)))
+      setPlayers([...players, player])
     } else if (doesNameExist) {
       toast({
         title: 'Sorry',
@@ -47,6 +48,12 @@ const PlayerDrawer = ({ players, setPlayers }) => {
     setNewPlayer('')
   }
 
+  const handleKeyDown = ({ key }) => {
+    if (key === 'Enter') {
+      addPlayer()
+    }
+  }
+
   return (
     <Box>
       <Button onClick={onOpen}>Manage Players</Button>
@@ -56,7 +63,20 @@ const PlayerDrawer = ({ players, setPlayers }) => {
           <DrawerCloseButton />
           <DrawerHeader>Add Player</DrawerHeader>
           <DrawerBody>
-            <Input placeholder="Player Name" value={newPlayer} onChange={(e) => setNewPlayer(e.target.value)} mb={2} />
+            <InputGroup>
+              <Input
+                placeholder='Player Name'
+                value={newPlayer}
+                onChange={(e) => setNewPlayer(e.target.value)}
+                onKeyDown={handleKeyDown}
+                mb={2}
+              />
+              <InputRightElement width='auto'>
+                <Button onClick={addPlayer}>
+                  Add
+                </Button>
+              </InputRightElement>
+            </InputGroup>
 
             <List mt={4}>
               {players.map((player, index) => (
@@ -72,11 +92,6 @@ const PlayerDrawer = ({ players, setPlayers }) => {
               ))}
             </List>
           </DrawerBody>
-          <DrawerFooter>
-            <Button mr={3} onClick={addPlayer}>
-              Add Player
-            </Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </Box>
