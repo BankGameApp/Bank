@@ -6,7 +6,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Input,
@@ -19,6 +18,7 @@ import {
   InputGroup,
   InputRightElement,
 } from '@chakra-ui/react'
+import { capitalizeText } from '../utils'
 
 const PlayerDrawer = ({ players, setPlayers }) => {
   const toast = useToast()
@@ -27,10 +27,11 @@ const PlayerDrawer = ({ players, setPlayers }) => {
 
   const addPlayer = () => {
     const doesNameExist = players.find(({ name }) => name.toLowerCase() === newPlayer.toLowerCase())
+    const newPlayerName = capitalizeText(newPlayer)
 
     if (newPlayer && !doesNameExist) {
       const player = {
-        name: newPlayer,
+        name: newPlayerName,
         score: 0
       };
 
@@ -38,7 +39,7 @@ const PlayerDrawer = ({ players, setPlayers }) => {
     } else if (doesNameExist) {
       toast({
         title: 'Sorry',
-        description: `Player with name ${newPlayer} already exists`,
+        description: `Player with name ${newPlayerName} already exists`,
         status: 'error',
         duration: 3000,
         isClosable: true,
