@@ -19,6 +19,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react'
 import { capitalizeText } from '../utils'
+import { DeleteIcon } from '@chakra-ui/icons'
 
 const PlayerDrawer = ({ players, setPlayers }) => {
   const toast = useToast()
@@ -55,6 +56,12 @@ const PlayerDrawer = ({ players, setPlayers }) => {
     }
   }
 
+  const deletePlayer = (index) => {
+    const updatedPlayers = [...players]
+    updatedPlayers.splice(index, 1)
+    setPlayers(updatedPlayers)
+  }
+
   return (
     <Box>
       <Button onClick={onOpen}>Manage Players</Button>
@@ -86,7 +93,15 @@ const PlayerDrawer = ({ players, setPlayers }) => {
                     justify='space-between'
                     alignItems='center'
                   >
-                    <Text>{player.name}</Text>
+                    <Flex alignItems='center'>
+                      <Text mr={3}>{player.name}</Text>
+                      <DeleteIcon
+                        color='red.400'
+                        boxSize={4}
+                        cursor='pointer'
+                        onClick={() => deletePlayer(index)}
+                      />
+                    </Flex>
                     <Text ml={2}>Score: {player.score}</Text>
                   </Flex>
                 </ListItem>
