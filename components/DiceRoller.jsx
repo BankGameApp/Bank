@@ -68,7 +68,7 @@ const DiceRoller = () => {
       flexDirection='column'
     >
       <Button
-        disabled={rolling}
+        isDisabled={rolling}
         onClick={rollDice}
         marginBottom={4}
       >
