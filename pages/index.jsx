@@ -7,12 +7,14 @@ import {
 import {
   Game,
   PlayerDrawer,
+  RoundDropdown,
   RulesTooltip,
   ToggleTheme,
 } from '../components'
 
 const Home = () => {
   const [players, setPlayers] = useState([])
+  const [rounds, setRounds] = useState(10)
 
   return (
     <>
@@ -35,11 +37,14 @@ const Home = () => {
               setPlayers={setPlayers}
             />
           </Box>
+          <Box marginLeft='2'>
+            <RoundDropdown rounds={rounds} setRounds={setRounds} />
+          </Box>
         </Flex>
       </Flex>
 
       <Box>
-        <Game players={players} />
+        <Game players={players} rounds={rounds} />
       </Box>
     </>
   )
