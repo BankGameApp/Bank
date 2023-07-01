@@ -76,7 +76,7 @@ const DiceRoller = ({ setScore }) => {
       <Button
         isDisabled={rolling}
         onClick={rollDice}
-        marginBottom={4}
+        marginBottom={2}
       >
         {rolling ? 'Rolling...' : 'Roll Dice'}
       </Button>
@@ -84,7 +84,6 @@ const DiceRoller = ({ setScore }) => {
         templateColumns={`repeat(${numberOfDice}, 1fr)`}
         gap={4}
         justifyContent='center'
-        marginTop={8}
       >
         {renderDiceRolls()}
       </Grid>
