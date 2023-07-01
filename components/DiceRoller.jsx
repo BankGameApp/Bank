@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Flex, Button, Text, Center, useColorMode } from '@chakra-ui/react';
 
-const DiceRoller = () => {
+const DiceRoller = ({ setScore }) => {
   const { colorMode } = useColorMode()
   const [numberOfDice] = useState(2);
   const [diceRolls, setDiceRolls] = useState([]);
   const [rolling, setRolling] = useState(false);
-  console.log(diceRolls)
 
   useEffect(() => {
     let intervalId;
@@ -32,6 +31,15 @@ const DiceRoller = () => {
       clearInterval(intervalId);
     };
   }, [rolling, numberOfDice]);
+
+  useEffect(() => {
+    // Logic for handling the final score
+    const totalSum = diceRolls.reduce((total, roll) => total + roll, 0);
+
+    if (!rolling && diceRolls.length) {
+      setScore({ sum: totalSum, diceSet: diceRolls })
+    }
+  }, [diceRolls, rolling]);
 
   const rollDice = () => {
     if (!rolling) {
@@ -59,8 +67,6 @@ const DiceRoller = () => {
     ));
   };
 
-  const totalSum = diceRolls.reduce((total, roll) => total + roll, 0);
-
   return (
     <Flex
       alignItems='center'
@@ -72,13 +78,8 @@ const DiceRoller = () => {
         onClick={rollDice}
         marginBottom={4}
       >
-        Roll Dice
+        {rolling ? 'Rolling...' : 'Roll Dice'}
       </Button>
-      {rolling ? (
-        <Text fontSize='xl'>Rolling...</Text>
-      ) : (
-        <Text fontSize='xl'>Total Sum: {totalSum}</Text>
-      )}
       <Grid
         templateColumns={`repeat(${numberOfDice}, 1fr)`}
         gap={4}

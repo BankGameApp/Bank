@@ -7,6 +7,7 @@ import {
 import {
   Game,
   PlayerDrawer,
+  RulesTooltip,
   ToggleTheme,
 } from '../components'
 
@@ -22,7 +23,10 @@ const Home = () => {
         paddingBottom='2'
         marginBottom='5'
       >
-        <Heading textAlign='center'>Bank!</Heading>
+        <Flex>
+          <Heading textAlign='center' marginRight='2'>Bank!</Heading>
+          <RulesTooltip />
+        </Flex>
         <Flex>
           <ToggleTheme />
           <Box marginLeft='2'>
@@ -35,7 +39,7 @@ const Home = () => {
       </Flex>
 
       <Box>
-        <Game />
+        <Game players={players} />
       </Box>
     </>
   )
