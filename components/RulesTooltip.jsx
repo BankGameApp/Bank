@@ -18,7 +18,7 @@ const RulesTooltip = () => {
       <PopoverTrigger>
         <Icon as={InfoOutlineIcon} boxSize={4} />
       </PopoverTrigger>
-      <PopoverContent width='800px'>
+      <PopoverContent padding='4' width='800px'>
         <PopoverArrow />
         <PopoverBody>
           <OrderedList>
