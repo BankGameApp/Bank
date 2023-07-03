@@ -21,7 +21,7 @@ import {
 import { capitalizeText } from '../utils'
 import { DeleteIcon } from '@chakra-ui/icons'
 
-const PlayerDrawer = ({ players, setPlayers }) => {
+const PlayerDrawer = ({ players, setPlayers, gameStarted }) => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [newPlayer, setNewPlayer] = useState('')
@@ -95,12 +95,14 @@ const PlayerDrawer = ({ players, setPlayers }) => {
                   >
                     <Flex alignItems='center'>
                       <Text mr={3}>{player.name}</Text>
-                      <DeleteIcon
-                        color='red.400'
-                        boxSize={4}
-                        cursor='pointer'
-                        onClick={() => deletePlayer(index)}
-                      />
+                      {!gameStarted && (
+                        <DeleteIcon
+                          color='red.400'
+                          boxSize={4}
+                          cursor='pointer'
+                          onClick={() => deletePlayer(index)}
+                        />
+                      )}
                     </Flex>
                     <Text ml={2}>Score: {player.score}</Text>
                   </Flex>

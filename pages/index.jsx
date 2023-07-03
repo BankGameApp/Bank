@@ -38,10 +38,11 @@ const Home = () => {
             <PlayerDrawer
               players={players}
               setPlayers={setPlayers}
+              gameStarted={gameStarted}
             />
           </Box>
           <Box marginLeft='2'>
-            <RoundDropdown rounds={rounds} setRounds={setRounds} />
+            <RoundDropdown rounds={rounds} setRounds={setRounds} disabled={gameStarted} />
           </Box>
         </Flex>
       </Flex>
