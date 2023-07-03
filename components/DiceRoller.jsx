@@ -1,71 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Flex, Button, Text, Center, useColorMode } from '@chakra-ui/react';
+import { Grid, Flex, Button, useColorMode } from '@chakra-ui/react';
 
 const DiceRoller = ({ setScore }) => {
   const { colorMode } = useColorMode()
-  const [numberOfDice] = useState(2);
-  const [diceRolls, setDiceRolls] = useState([]);
+  const [dice1, setDice1] = useState(null);
+  const [dice2, setDice2] = useState(null);
   const [rolling, setRolling] = useState(false);
 
-  useEffect(() => {
-    let intervalId;
+  const generateRandomDiceArrays = async () => {
+    setRolling(true);
 
-    if (rolling) {
-      intervalId = setInterval(() => {
-        const newDiceRolls = [];
-        for (let i = 0; i < numberOfDice; i++) {
-          const diceValue = Math.floor(Math.random() * 6) + 1;
-          newDiceRolls.push(diceValue);
-        }
-        setDiceRolls(newDiceRolls);
-      }, 150); // Interval duration of 150ms
+    for (let i = 0; i < 10; i++) {
+      let num1, num2;
 
-      // Stop rolling after 2 seconds (2000ms)
-      setTimeout(() => {
-        clearInterval(intervalId);
-        setRolling(false);
-      }, 2000);
+      do {
+        num1 = Math.floor(Math.random() * 6) + 1;
+      } while (i > 0 && num1 === dice1);
+
+      do {
+        num2 = Math.floor(Math.random() * 6) + 1;
+      } while (i > 0 && num2 === dice2);
+
+      setDice1(num1);
+      setDice2(num2);
+
+      // wait 100 ms before setting next dice set
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
+
+    setRolling(false);
+  };
+
+  const returnDiceImg = (diceValue) => {
+    const color = colorMode === 'dark' ? 'Light' : 'Dark';
+    const diceImage = `/Dice/${diceValue}Dice${color}.png`;
+
+    return diceImage;
+  }
+
+  useEffect(() => {
+    if (!rolling && dice1 && dice2) {
+      setScore({ sum: dice1 + dice2, diceSet: [dice1, dice2] })
+    }
+
+    const clearDice = () => {
+      setDice1(null);
+      setDice2(null);
+    }
+
+    const timer = setInterval(() => {
+      clearDice();
+    }, 3000);
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(timer);
     };
-  }, [rolling, numberOfDice]);
-
-  useEffect(() => {
-    // Logic for handling the final score
-    const totalSum = diceRolls.reduce((total, roll) => total + roll, 0);
-
-    if (!rolling && diceRolls.length) {
-      setScore({ sum: totalSum, diceSet: diceRolls })
-    }
-  }, [diceRolls, rolling]);
-
-  const rollDice = () => {
-    if (!rolling) {
-      setDiceRolls([]);
-      setRolling(true);
-    }
-  };
-
-  const renderDice = (diceValue) => {
-    const color = colorMode === 'dark' ? 'Light' : 'Dark'
-    const diceImage = `/Dice/${diceValue}Dice${color}.png`
-
-    return (
-      <Center>
-        <img src={diceImage} alt={`Dice ${diceValue}`} width={100} height={100} />
-      </Center>
-    )
-  };
-
-  const renderDiceRolls = () => {
-    return diceRolls.map((roll, index) => (
-      <Flex key={index} alignItems='center' justifyContent='center' margin={2}>
-        {renderDice(roll)}
-      </Flex>
-    ));
-  };
+  }, [rolling, dice1, dice2])
 
   return (
     <Flex
@@ -75,17 +65,22 @@ const DiceRoller = ({ setScore }) => {
     >
       <Button
         isDisabled={rolling}
-        onClick={rollDice}
+        onClick={generateRandomDiceArrays}
         marginBottom={2}
       >
         {rolling ? 'Rolling...' : 'Roll Dice'}
       </Button>
       <Grid
-        templateColumns={`repeat(${numberOfDice}, 1fr)`}
+        templateColumns='repeat(2, 1fr)'
         gap={4}
         justifyContent='center'
       >
-        {renderDiceRolls()}
+        <Flex alignItems='center' justifyContent='center' margin={2}>
+          {dice1 && <img src={returnDiceImg(dice1)} width={100} height={100} />}
+        </Flex>
+        <Flex alignItems='center' justifyContent='center' margin={2}>
+          {dice2 && <img src={returnDiceImg(dice2)} width={100} height={100} />}
+        </Flex>
       </Grid>
     </Flex>
   );
