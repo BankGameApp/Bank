@@ -3,10 +3,12 @@ import {
   Heading,
   Flex,
   Box,
+  Center,
 } from '@chakra-ui/react'
 import {
   Game,
   PlayerDrawer,
+  PopoverButton,
   RoundDropdown,
   RulesTooltip,
   ToggleTheme,
@@ -15,6 +17,7 @@ import {
 const Home = () => {
   const [players, setPlayers] = useState([])
   const [rounds, setRounds] = useState(10)
+  const [gameStarted, setGameStarted] = useState(false)
 
   return (
     <>
@@ -44,7 +47,18 @@ const Home = () => {
       </Flex>
 
       <Box>
-        <Game players={players} rounds={rounds} />
+        {gameStarted ? (
+          <Game players={players} rounds={rounds} />
+        ) : (
+          <Center>
+            <PopoverButton
+              disabled={players.length < 2}
+              popoverMessage='You need at least 2 players to play.'
+              buttonLabel='Play'
+              onClick={() => setGameStarted(true)}
+            />
+          </Center>
+        )}
       </Box>
     </>
   )
