@@ -5,6 +5,7 @@ import {
   Box,
   Center,
   Text,
+  Button,
 } from '@chakra-ui/react'
 import {
   Game,
@@ -53,14 +54,17 @@ const Home = () => {
           <Center>
             <Text fontWeight='thin' fontSize='7xl'>Game Over!</Text>
           </Center>
-            {winners.map((winner, index) => (
-              <Box key={index}>
-                <Text fontWeight='thin' fontSize='2xl'>Place: {formatOrdinalNumber(winner.place)}</Text>
-                <Text fontWeight='thin' fontSize='2xl'>Name: {winner.name}</Text>
-                <Text fontWeight='thin' fontSize='2xl'>Score: {winner.score.toLocaleString()}</Text>
-                <br />
-              </Box>
-            ))}
+          <Center>
+            <Button onClick={() => window.location.reload()}>Play Again</Button>
+          </Center>
+          {winners.map((winner, index) => (
+            <Box key={index}>
+              <Text fontWeight='thin' fontSize='2xl'>Place: {formatOrdinalNumber(winner.place)}</Text>
+              <Text fontWeight='thin' fontSize='2xl'>Name: {winner.name}</Text>
+              <Text fontWeight='thin' fontSize='2xl'>Score: {winner.score.toLocaleString()}</Text>
+              <br />
+            </Box>
+          ))}
         </>
       )
     }
