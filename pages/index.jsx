@@ -55,6 +55,14 @@ const Home = () => {
     }
   }
 
+  const bankPlayerScore = ({ name }) => {
+    setPlayers(prevPlayers =>
+      prevPlayers.map(player =>
+        player.name === name ? { ...player, score: player.score + roundScore } : player
+      )
+    )
+  }
+
   return (
     <>
       <Flex
@@ -75,6 +83,7 @@ const Home = () => {
               players={players}
               setPlayers={setPlayers}
               gameStarted={gameStarted}
+              bank={bankPlayerScore}
             />
           </Box>
           <Box marginLeft='2'>

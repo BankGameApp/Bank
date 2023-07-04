@@ -21,7 +21,7 @@ import {
 import { capitalizeText } from '../utils'
 import { DeleteIcon, AddIcon } from '@chakra-ui/icons'
 
-const PlayerDrawer = ({ players, setPlayers, gameStarted }) => {
+const PlayerDrawer = ({ players, setPlayers, gameStarted, bank }) => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [newPlayer, setNewPlayer] = useState('')
@@ -109,7 +109,7 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted }) => {
                           color='green.400'
                           boxSize={3}
                           cursor='pointer'
-                          onClick={() => console.log('bank', player)}
+                          onClick={() => bank(player)}
                         />
                       )}
                     </Flex>
