@@ -21,7 +21,7 @@ import {
 import { capitalizeText } from '../utils'
 import { DeleteIcon, AddIcon } from '@chakra-ui/icons'
 
-const PlayerDrawer = ({ players, setPlayers, gameStarted, gameOver, bank, playersInRound }) => {
+const PlayerDrawer = ({ players, setPlayers, gameStarted, gameOver, bank, playersInRound, roundScore }) => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [newPlayer, setNewPlayer] = useState('')
@@ -76,7 +76,7 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted, gameOver, bank, player
       )
     }
 
-    if (gameStarted && (playersInRound.includes(player.name))) {
+    if (gameStarted && (playersInRound.includes(player.name)) && (roundScore > 0)) {
       return (
         <AddIcon
           color='green.400'

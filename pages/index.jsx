@@ -127,6 +127,7 @@ const Home = () => {
               gameOver={gameOver}
               bank={bankPlayerScore}
               playersInRound={playersInRound}
+              roundScore={roundScore}
             />
           </Box>
           <Box marginLeft='2'>
