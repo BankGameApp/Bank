@@ -69,22 +69,24 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted }) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Add Player</DrawerHeader>
+          <DrawerHeader>{!gameStarted ? 'Add Players' : 'Manage Players'}</DrawerHeader>
           <DrawerBody>
-            <InputGroup>
-              <Input
-                placeholder='Player Name'
-                value={newPlayer}
-                onChange={(e) => setNewPlayer(e.target.value)}
-                onKeyDown={handleKeyDown}
-                mb={2}
-              />
-              <InputRightElement width='auto'>
-                <Button colorScheme='blue' onClick={addPlayer}>
-                  Add
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+            {!gameStarted && (
+              <InputGroup>
+                <Input
+                  placeholder='Player Name'
+                  value={newPlayer}
+                  onChange={(e) => setNewPlayer(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  mb={2}
+                />
+                <InputRightElement width='auto'>
+                  <Button colorScheme='blue' onClick={addPlayer}>
+                    Add
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            )}
 
             <List mt={4}>
               {players.map((player, index) => (
