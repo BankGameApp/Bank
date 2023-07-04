@@ -48,7 +48,7 @@ const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver, players
   }, [score])
 
   useEffect(() => {
-    if (currentRound === rounds) {
+    if (currentRound === rounds + 1) {
       setGameOver(true)
     }
   }, [currentRound])
