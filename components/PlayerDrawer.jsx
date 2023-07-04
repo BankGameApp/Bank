@@ -21,7 +21,7 @@ import {
 import { capitalizeText } from '../utils'
 import { DeleteIcon, AddIcon } from '@chakra-ui/icons'
 
-const PlayerDrawer = ({ players, setPlayers, gameStarted, bank }) => {
+const PlayerDrawer = ({ players, setPlayers, gameStarted, gameOver, bank, playersInRound }) => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [newPlayer, setNewPlayer] = useState('')
@@ -62,6 +62,32 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted, bank }) => {
     setPlayers(updatedPlayers)
   }
 
+  const handleIcon = (index, player) => {
+    if (gameOver) return
+
+    if (!gameStarted) {
+      return (
+        <DeleteIcon
+          color='red.400'
+          boxSize={3}
+          cursor='pointer'
+          onClick={() => deletePlayer(index)}
+        />
+      )
+    }
+
+    if (gameStarted && (playersInRound.includes(player.name))) {
+      return (
+        <AddIcon
+          color='green.400'
+          boxSize={3}
+          cursor='pointer'
+          onClick={() => bank(player)}
+        />
+      )
+    }
+  }
+
   return (
     <Box>
       <Button onClick={onOpen}>Manage Players</Button>
@@ -97,21 +123,7 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted, bank }) => {
                   >
                     <Flex alignItems='center'>
                       <Text mr={3}>{player.name}</Text>
-                      {!gameStarted ? (
-                        <DeleteIcon
-                          color='red.400'
-                          boxSize={3}
-                          cursor='pointer'
-                          onClick={() => deletePlayer(index)}
-                        />
-                      ) : (
-                        <AddIcon
-                          color='green.400'
-                          boxSize={3}
-                          cursor='pointer'
-                          onClick={() => bank(player)}
-                        />
-                      )}
+                      {handleIcon(index, player)}
                     </Flex>
                     <Text ml={2}>Score: {player.score}</Text>
                   </Flex>

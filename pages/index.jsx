@@ -17,6 +17,7 @@ import {
 
 const Home = () => {
   const [players, setPlayers] = useState([])
+  const [playersInRound, setPlayersInRound] = useState([])
   const [rounds, setRounds] = useState(10)
   const [gameStarted, setGameStarted] = useState(false)
   const [gameOver, setGameOver] = useState(false)
@@ -39,6 +40,8 @@ const Home = () => {
           roundScore={roundScore}
           setRoundScore={setRoundScore}
           setGameOver={setGameOver}
+          playersInRound={playersInRound}
+          setPlayersInRound={setPlayersInRound}
         />
       )
     } else {
@@ -61,6 +64,7 @@ const Home = () => {
         player.name === name ? { ...player, score: player.score + roundScore } : player
       )
     )
+    setPlayersInRound(prevPlayersInRound => prevPlayersInRound.filter(iName => iName !== name))
   }
 
   return (
@@ -83,7 +87,9 @@ const Home = () => {
               players={players}
               setPlayers={setPlayers}
               gameStarted={gameStarted}
+              gaveOver={gameOver}
               bank={bankPlayerScore}
+              playersInRound={playersInRound}
             />
           </Box>
           <Box marginLeft='2'>

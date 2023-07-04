@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Center, Text } from '@chakra-ui/react'
 import DiceRoller from './DiceRoller'
 
-const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver }) => {
+const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver, playersInRound, setPlayersInRound }) => {
   const [diceRollCount, setDiceRollCount] = useState(0)
   const [currentRound, setCurrentRound] = useState(1)
   const [score, setScore] = useState({
@@ -36,7 +36,13 @@ const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver }) => {
       // if dice roll count hit a 7 and is now 0
       setDiceRollCount(0)
       // if dice have been rolled and a 7 has been rolled after round 3, increase round
-      if (score.sum && score.diceSet.length) setCurrentRound(prevRound => prevRound + 1)
+      // and update players in round
+      if (score.sum && score.diceSet.length) {
+        const newRoundPlayers = players.map(player => player.name)
+        setPlayersInRound(newRoundPlayers)
+
+        setCurrentRound(prevRound => prevRound + 1)
+      }
     }
     setRoundScore(diceRollSum)
   }, [score])
@@ -46,6 +52,24 @@ const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver }) => {
       setGameOver(true)
     }
   }, [currentRound])
+
+  useEffect(() => {
+    // handle updating players in the round
+    // each time the round resets or the playersInRound is empty
+    if (players.length && !playersInRound.length) {
+      const newRoundPlayers = players.map(player => player.name)
+
+      setPlayersInRound(newRoundPlayers)
+    }
+
+    // if score has been set and playersInRound is empty then we need to reset round
+    // this will happen after every player has banked
+    if (score.sum && score.diceSet && !playersInRound.length) {
+      setDiceRollCount(0)
+      setCurrentRound(prevRound => prevRound + 1)
+      setRoundScore(0)
+    }
+  }, [score, players, playersInRound])
 
   return (
     <>
