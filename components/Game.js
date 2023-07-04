@@ -4,7 +4,7 @@ import DiceRoller from './DiceRoller'
 
 const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver }) => {
   const [diceRollCount, setDiceRollCount] = useState(0)
-  const [currentRound, setCurrentRound] = useState(0)
+  const [currentRound, setCurrentRound] = useState(1)
   const [score, setScore] = useState({
     sum: 0,
     diceSet: []
@@ -33,8 +33,10 @@ const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver }) => {
     if (diceRollSum) {
       setDiceRollCount(prevValue => prevValue + 1)
     } else {
+      // if dice roll count hit a 7 and is now 0
       setDiceRollCount(0)
-      setCurrentRound(prevRound => prevRound + 1)
+      // if dice have been rolled and a 7 has been rolled after 3 increase round
+      if (score.sum && score.diceSet.length) setCurrentRound(prevRound => prevRound + 1)
     }
     setRoundScore(diceRollSum)
   }, [score])
