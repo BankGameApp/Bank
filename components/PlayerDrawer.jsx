@@ -125,7 +125,7 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted, gameOver, bank, player
                       <Text mr={3}>{player.name}</Text>
                       {handleIcon(index, player)}
                     </Flex>
-                    <Text ml={2}>Score: {player.score}</Text>
+                    <Text ml={2}>Score: {player.score.toLocaleString()}</Text>
                   </Flex>
                 </ListItem>
               ))}

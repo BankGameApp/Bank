@@ -23,12 +23,45 @@ const Home = () => {
   const [gameOver, setGameOver] = useState(false)
   const [roundScore, setRoundScore] = useState(0)
 
+  const formatOrdinalNumber = (number) => {
+    const suffixes = ['st', 'nd', 'rd']
+    const remainder = number % 10
+    const ordinalSuffix = (number % 100 - remainder === 10) ? 'th' : suffixes[remainder - 1] || 'th'
+
+    return number + ordinalSuffix
+  }
+
   const handleReturn = () => {
     if (gameOver) {
+      const sortedWinners = players.sort((a, b) => b.score - a.score)
+      const winners = []
+
+      sortedWinners.reduce((prevUser, currentUser, index) => {
+        if (index === 0) {
+          winners.push({ place: 1, name: currentUser.name, score: currentUser.score });
+        } else if (currentUser.score === prevUser.score) {
+          winners.push({ place: winners[index - 1].place, name: currentUser.name, score: currentUser.score });
+        } else {
+          winners.push({ place: index + 1, name: currentUser.name, score: currentUser.score });
+        }
+
+        return currentUser;
+      }, null);
+
       return (
-        <Center>
-          <Text fontWeight='thin' fontSize='7xl'>Game Over!</Text>
-        </Center>
+        <>
+          <Center>
+            <Text fontWeight='thin' fontSize='7xl'>Game Over!</Text>
+          </Center>
+            {winners.map((winner, index) => (
+              <Box key={index}>
+                <Text fontWeight='thin' fontSize='2xl'>Place: {formatOrdinalNumber(winner.place)}</Text>
+                <Text fontWeight='thin' fontSize='2xl'>Name: {winner.name}</Text>
+                <Text fontWeight='thin' fontSize='2xl'>Score: {winner.score.toLocaleString()}</Text>
+                <br />
+              </Box>
+            ))}
+        </>
       )
     }
 
@@ -87,7 +120,7 @@ const Home = () => {
               players={players}
               setPlayers={setPlayers}
               gameStarted={gameStarted}
-              gaveOver={gameOver}
+              gameOver={gameOver}
               bank={bankPlayerScore}
               playersInRound={playersInRound}
             />
