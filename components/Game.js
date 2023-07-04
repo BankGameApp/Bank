@@ -35,7 +35,7 @@ const Game = ({ players, rounds, roundScore, setRoundScore, setGameOver }) => {
     } else {
       // if dice roll count hit a 7 and is now 0
       setDiceRollCount(0)
-      // if dice have been rolled and a 7 has been rolled after 3 increase round
+      // if dice have been rolled and a 7 has been rolled after round 3, increase round
       if (score.sum && score.diceSet.length) setCurrentRound(prevRound => prevRound + 1)
     }
     setRoundScore(diceRollSum)
