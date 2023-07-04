@@ -19,7 +19,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react'
 import { capitalizeText } from '../utils'
-import { DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon, AddIcon } from '@chakra-ui/icons'
 
 const PlayerDrawer = ({ players, setPlayers, gameStarted }) => {
   const toast = useToast()
@@ -95,12 +95,19 @@ const PlayerDrawer = ({ players, setPlayers, gameStarted }) => {
                   >
                     <Flex alignItems='center'>
                       <Text mr={3}>{player.name}</Text>
-                      {!gameStarted && (
+                      {!gameStarted ? (
                         <DeleteIcon
                           color='red.400'
-                          boxSize={4}
+                          boxSize={3}
                           cursor='pointer'
                           onClick={() => deletePlayer(index)}
+                        />
+                      ) : (
+                        <AddIcon
+                          color='green.400'
+                          boxSize={3}
+                          cursor='pointer'
+                          onClick={() => console.log('bank', player)}
                         />
                       )}
                     </Flex>
