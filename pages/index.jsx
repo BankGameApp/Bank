@@ -4,6 +4,7 @@ import {
   Flex,
   Box,
   Center,
+  Text,
 } from '@chakra-ui/react'
 import {
   Game,
@@ -18,6 +19,41 @@ const Home = () => {
   const [players, setPlayers] = useState([])
   const [rounds, setRounds] = useState(10)
   const [gameStarted, setGameStarted] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+  const [roundScore, setRoundScore] = useState(0)
+
+  const handleReturn = () => {
+    if (gameOver) {
+      return (
+        <Center>
+          <Text fontWeight='thin' fontSize='7xl'>Game Over!</Text>
+        </Center>
+      )
+    }
+
+    if (gameStarted) {
+      return (
+        <Game
+          players={players}
+          rounds={rounds}
+          roundScore={roundScore}
+          setRoundScore={setRoundScore}
+          setGameOver={setGameOver}
+        />
+      )
+    } else {
+      return (
+        <Center>
+          <PopoverButton
+            disabled={players.length < 2}
+            popoverMessage='You need at least 2 players to play.'
+            buttonLabel='Play'
+            onClick={() => setGameStarted(true)}
+          />
+        </Center>
+      )
+    }
+  }
 
   return (
     <>
@@ -48,18 +84,7 @@ const Home = () => {
       </Flex>
 
       <Box>
-        {gameStarted ? (
-          <Game players={players} rounds={rounds} />
-        ) : (
-          <Center>
-            <PopoverButton
-              disabled={players.length < 2}
-              popoverMessage='You need at least 2 players to play.'
-              buttonLabel='Play'
-              onClick={() => setGameStarted(true)}
-            />
-          </Center>
-        )}
+        {handleReturn()}
       </Box>
     </>
   )
